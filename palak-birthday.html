@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Palak</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    overflow:hidden;
+}
+
+.container{
+    position:relative;
+    top:50vh;
+    transform:translateY(-50%);
+    padding:20px;
+}
+
+h1{
+    font-size:3rem;
+    color:white;
+}
+
+p{
+    font-size:1.2rem;
+    color:white;
+}
+
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    background:white;
+    color:#ff4b8a;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ffe4ef;
+}
+
+/* mobile friendly */
+@media(max-width:600px){
+h1{font-size:2rem;}
+p{font-size:1rem;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🎉 Happy Birthday Palak 🎂</h1>
+<p>May your day be filled with happiness, laughter, and beautiful memories!</p>
+<button onclick="startConfetti()">Celebrate 🎊</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+for(let i=0;i<180;i++){
+confetti.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*8+3,
+speed:Math.random()*3+1,
+color:`hsl(${Math.random()*360},100%,50%)`
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+confetti.forEach(c=>{
+ctx.fillStyle=c.color;
+ctx.fillRect(c.x,c.y,c.size,c.size);
+});
+
+update();
+}
+
+function update(){
+confetti.forEach(c=>{
+c.y+=c.speed;
+
+if(c.y>canvas.height){
+c.y=0;
+c.x=Math.random()*canvas.width;
+}
+});
+}
+
+function startConfetti(){
+setInterval(draw,20);
+}
+
+startConfetti();
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
